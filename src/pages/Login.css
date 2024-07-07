@@ -1,3 +1,8 @@
+.principal{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 .contenedor-inicio-sesion {
     width: 100%;
     max-width: 400px;
