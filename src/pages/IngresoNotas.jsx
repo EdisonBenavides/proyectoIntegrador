@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import './IngresoNotasStyle.css';
 
 const emojisFelices = ['😊', '😄', '😁', '😆', '😃', '😀', '🙂', '😍', '🥳', '🌞'];
@@ -39,8 +40,6 @@ const IngresoNotas = () => {
     const [emojiActual, setEmojiActual] = useState(emojisFelices[0]);
     const [frasePositiva, setFrasePositiva] = useState('');
     const [fechaHora, setFechaHora] = useState('');
-    const [nota, setNota] = useState('');
-    const usuarioActual = localStorage.getItem('usuarioActual');
 
     useEffect(() => {
         mostrarFrasePositiva();
@@ -50,42 +49,14 @@ const IngresoNotas = () => {
         const indiceAleatorio = Math.floor(Math.random() * frasesPositivas.length);
         const frase = frasesPositivas[indiceAleatorio];
         setFrasePositiva(frase);
-        leerFrase(frase);
 
         const ahora = new Date();
         setFechaHora(ahora.toLocaleString());
     };
 
-    const leerFrase = (frase) => {
-        const utterance = new SpeechSynthesisUtterance(frase);
-        utterance.lang = 'es-ES';
-        speechSynthesis.speak(utterance);
-    };
-
     const cambiarEmoji = () => {
         const indice = (emojisFelices.indexOf(emojiActual) + 1) % emojisFelices.length;
         setEmojiActual(emojisFelices[indice]);
-    };
-
-    const guardarNota = () => {
-        if (nota.trim() !== '') {
-            let notas = JSON.parse(localStorage.getItem('notas')) || [];
-            notas.push(nota);
-            localStorage.setItem('notas', JSON.stringify(notas));
-            alert('Nota guardada exitosamente.');
-            setNota('');
-            cambiarEmoji();
-        } else {
-            alert('Por favor, escribe una nota antes de guardar.');
-        }
-    };
-
-    const salir = () => {
-        window.location.href = 'index.html';
-    };
-
-    const verNotas = () => {
-        window.location.href = 'nota_guardada.html';
     };
 
     return (
@@ -101,15 +72,17 @@ const IngresoNotas = () => {
             </div>
             <div className="panel-derecho">
                 <div id="bienvenida">
-                    <p id="mensaje">¡Qué bueno verte, {usuarioActual}! Gracias por cuidar de ti. Tu bienestar es nuestra prioridad</p>
+                    <p id="mensaje">¡Qué bueno verte, ! Gracias por cuidar de ti. Tu bienestar es nuestra prioridad</p>
                 </div>
-                <textarea id="entradaNota" placeholder="Escribe tu nota aquí..." value={nota} onChange={(e) => setNota(e.target.value)}></textarea>
+                <textarea id="entradaNota" placeholder="Escribe tu nota aquí..."></textarea>
                 <div className="contenedor-botones">
                     <div id="noteButtons">
-                        <button id="guardarNota" onClick={guardarNota}>Guardar Nota</button>
-                        <button id="verNotas" onClick={verNotas}>Leer Notas</button>
+                        <button id="guardarNota">Guardar Nota</button>
+                        <button id="verNotas">Leer Notas</button>
                     </div>
-                    <button id="botonSalir" onClick={salir}>Salir</button>
+                    <Link to={'/'}>
+                        <button id="botonSalir">Salir</button>
+                    </Link>
                 </div>
             </div>
             <div className="imagen-fondo">
