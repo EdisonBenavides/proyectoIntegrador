@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import './IngresoNotasStyle.css';
 
 const emojisFelices = ['😊', '😄', '😁', '😆', '😃', '😀', '🙂', '😍', '🥳', '🌞'];
@@ -80,14 +81,6 @@ const IngresoNotas = () => {
         }
     };
 
-    const salir = () => {
-        window.location.href = 'index.html';
-    };
-
-    const verNotas = () => {
-        window.location.href = 'nota_guardada.html';
-    };
-
     return (
         <div className="contenedor">
             <div className="panel-izquierdo">
@@ -107,9 +100,11 @@ const IngresoNotas = () => {
                 <div className="contenedor-botones">
                     <div id="noteButtons">
                         <button id="guardarNota" onClick={guardarNota}>Guardar Nota</button>
-                        <button id="verNotas" onClick={verNotas}>Leer Notas</button>
+                        <button id="verNotas">Leer Notas</button>
                     </div>
-                    <button id="botonSalir" onClick={salir}>Salir</button>
+                    <Link to={'/'}>
+                        <button id="botonSalir">Salir</button>
+                    </Link>
                 </div>
             </div>
             <div className="imagen-fondo">
